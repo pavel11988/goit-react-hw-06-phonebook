@@ -24,7 +24,9 @@ export const Info = styled.div`
 `;
 
 export const Name = styled.p``;
+
 export const Telephone = styled.p``;
+
 export const Button = styled.button`
   border-radius: 50%;
   border-color: transparent;

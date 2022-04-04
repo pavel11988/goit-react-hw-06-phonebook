@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import actions from '../../redux/actions';
 import { useState } from 'react';
 import { Form, Label, Name, Telephone, Button } from './ContactForm.styled';
 
-export default function ContactForm(props) {
+function ContactForm({ contacts, onSubmit }) {
   const [name, setName] = useState('');
   const [tel, setTel] = useState('');
 
@@ -28,7 +30,14 @@ export default function ContactForm(props) {
       alert('Warning! Please enter correct data! ');
       return;
     }
-    props.onSubmit(name, tel);
+    console.log(contacts);
+    if (contacts.find(contact => contact.name === name)) {
+      alert(
+        'Warning! A contact with this name already exists in the contact book! '
+      );
+      return;
+    }
+    onSubmit(name, tel);
     setName('');
     setTel('');
   };
@@ -69,3 +78,13 @@ export default function ContactForm(props) {
 ContactForm.propTypes = {
   onSubmit: PropTypes.func,
 };
+
+const mapStateToProps = ({ phonebook: { contacts } }) => ({
+  contacts,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSubmit: (name, tel) => dispatch(actions.addContact(name, tel)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
