@@ -30,7 +30,6 @@ function ContactForm({ contacts, onSubmit }) {
       alert('Warning! Please enter correct data! ');
       return;
     }
-    console.log(contacts);
     if (contacts.find(contact => contact.name === name)) {
       alert(
         'Warning! A contact with this name already exists in the contact book! '
